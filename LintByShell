@@ -1,25 +1,27 @@
 #!/bin/bash
+temp="false"
 separator="."
 xiegang="/"
 #Filter
-filter1="Android.mk"
-filter2="AndroidManifest.xml"
-filter3=".java"
-filter4="lint"
-
+filter=(Android.mk AndroidManifest.xml .java lint styles.xml colors.xml strings.xml arrays.xml attrs.xml ids.xml bools.xml dimens.xml config.xml donottranslate.xml integers.xml symbols.xml themes.xml)
 #var=$(ls -lR |grep -v ^d|awk '{print $9}' |tr -s '\n')
 var=`find . -type f`
 
 for i in $var
 do
-if [[ $i == *$filter3* ]];then
-  echo "Java File  pass！！！"
-elif [[ $i == *$filter1* ]];then
-  echo "$filter1  pass !!!"
-elif [[ $i == *$filter2* ]];then
-  echo "$filter2  pass !!!"
-elif [[ $i == *$filter4* ]];then
-  echo "$filter4  pass !!!"
+#######
+for j in ${filter[@]}
+do
+if [[ $i == *$j* ]];then
+temp=$j
+break
+else
+temp="false"
+fi
+done
+
+if [[ $temp != "false" ]];then
+  echo "$temp File pass !!!"
 else
   filename1=${i##*$xiegang}
   #echo "带后缀文件名:  $filename1"
@@ -30,7 +32,8 @@ else
   #echo "变量： $var1"
   if [ $var1 -eq 0 ];then
   echo "Delete： $i File"
-  rm -f $i
+  #rm -f $i
   fi
 fi
+#######
 done
