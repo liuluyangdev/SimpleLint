@@ -1,0 +1,36 @@
+#!/bin/bash
+separator="."
+xiegang="/"
+#Filter
+filter1="Android.mk"
+filter2="AndroidManifest.xml"
+filter3=".java"
+filter4="lint"
+
+#var=$(ls -lR |grep -v ^d|awk '{print $9}' |tr -s '\n')
+var=`find . -type f`
+
+for i in $var
+do
+if [[ $i == *$filter3* ]];then
+  echo "Java File  pass！！！"
+elif [[ $i == *$filter1* ]];then
+  echo "$filter1  pass !!!"
+elif [[ $i == *$filter2* ]];then
+  echo "$filter2  pass !!!"
+elif [[ $i == *$filter4* ]];then
+  echo "$filter4  pass !!!"
+else
+  filename1=${i##*$xiegang}
+  #echo "带后缀文件名:  $filename1"
+  filename=${filename1%$separator*}
+  #echo "不带后缀文件名: $filename"
+  #echo " $filename "
+  var1=$(grep -ri $filename . | wc -l)
+  #echo "变量： $var1"
+  if [ $var1 -eq 0 ];then
+  echo "Delete： $i File"
+  #rm -f $i
+  fi
+fi
+done
