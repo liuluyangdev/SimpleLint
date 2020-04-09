@@ -30,7 +30,7 @@ else
   #echo "变量： $var1"
   if [ $var1 -eq 0 ];then
   echo "Delete： $i File"
-  #rm -f $i
+  rm -f $i
   fi
 fi
 done
